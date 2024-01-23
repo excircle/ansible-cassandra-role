@@ -1,0 +1,23 @@
+---
+
+- name: Include Assertions Tasks
+  ansible.builtin.include_tasks: assertions.yml
+
+- name: Include Conditional Variables
+  ansible.builtin.include_tasks: variables.yml
+
+- name: Include OS Family Relevant Tasks
+  ansible.builtin.include_tasks: "install/{{ ansible_os_family }}.yml"
+
+- name: Include Hot Fixes
+  ansible.builtin.include_tasks: hotfixes.yml
+
+- name: Include Join Cluster Tasks
+  ansible.builtin.include_tasks: join_cluster.yml
+  when: cassandra_join_cluster | bool
+
+- name: Include Configuration Tasks
+  ansible.builtin.include_tasks: configure.yml
+
+- name: Include Service Tasks
+  ansible.builtin.include_tasks: service.yml
